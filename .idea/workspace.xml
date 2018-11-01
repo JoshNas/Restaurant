@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ad988984-cee6-4d2b-ab76-bb8bc24275ce" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/joshn.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/employees" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/home.py" beforeDir="false" afterPath="$PROJECT_DIR$/home.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,61 +15,53 @@
     <session id="555237711">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="1" />
+          <entry key="project.closed" value="3" />
           <entry key="project.open.time.0" value="2" />
-          <entry key="project.opened" value="2" />
+          <entry key="project.open.time.2" value="1" />
+          <entry key="project.opened" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="employees" value="1" />
-          <entry key="py" value="2" />
+          <entry key="py" value="4" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="CSV" value="1" />
           <entry key="Python" value="2" />
+          <entry key="Scratch" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="employees" value="23" />
-          <entry key="py" value="435" />
+          <entry key="py" value="1537" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="CSV" value="23" />
-          <entry key="Python" value="435" />
+          <entry key="Python" value="1241" />
+          <entry key="Scratch" value="296" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages" />
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/home.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="320">
-              <caret line="71" column="44" selection-start-line="71" selection-start-column="44" selection-end-line="71" selection-end-column="44" />
+            <state relative-caret-position="1078">
+              <caret line="104" column="47" selection-start-line="104" selection-start-column="47" selection-end-line="104" selection-end-column="47" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
-                <marker date="1541022751994" expanded="true" signature="1238:1247" ph="..." />
-                <marker date="1541022751994" expanded="true" signature="2573:2621" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="239">
-              <caret line="36" column="22" lean-forward="true" selection-end-line="72" />
-              <folding>
-                <element signature="e#0#20#0" expanded="true" />
+                <marker date="1541090501122" expanded="true" signature="1232:1241" ph="..." />
+                <marker date="1541090501122" expanded="true" signature="2133:2178" ph="..." />
+                <marker date="1541090501122" expanded="true" signature="3042:3051" ph="..." />
               </folding>
             </state>
           </provider>
@@ -80,6 +72,18 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="64">
               <caret line="4" column="8" selection-start-line="4" selection-start-column="8" selection-end-line="4" selection-end-column="8" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="240">
+              <caret line="15" column="25" lean-forward="true" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
+              <folding>
+                <marker date="1541090352541" expanded="true" signature="82:87" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -96,6 +100,7 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>f</find>
+      <find>current_user</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -106,13 +111,14 @@
       <list>
         <option value="$PROJECT_DIR$/employees" />
         <option value="$PROJECT_DIR$/test.py" />
+        <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch.py" />
         <option value="$PROJECT_DIR$/home.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="376" />
-    <option name="y" value="516" />
+    <option name="x" value="965" />
+    <option name="y" value="505" />
     <option name="width" value="1264" />
     <option name="height" value="1463" />
   </component>
@@ -121,7 +127,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -129,13 +134,24 @@
               <item name="Resturant" type="b2602c69:ProjectViewProjectNode" />
               <item name="Resturant" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="Resturant" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Scratches and Consoles" type="1a2a3e82:ScratchProjectViewPane$MyProjectNode" />
+            </path>
+            <path>
+              <item name="Resturant" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Scratches and Consoles" type="1a2a3e82:ScratchProjectViewPane$MyProjectNode" />
+              <item name="Scratches" type="d62648e6:ScratchProjectViewPane$MyRootNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="Python" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
@@ -151,7 +167,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.home">
     <configuration name="home" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Resturant" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -173,9 +189,35 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="scratch" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Resturant" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$APPLICATION_CONFIG_DIR$/scratches" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$APPLICATION_CONFIG_DIR$/scratches/scratch.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.home" />
+      <item itemvalue="Python.scratch" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.home" />
+        <item itemvalue="Python.scratch" />
       </list>
     </recent_temporary>
   </component>
@@ -193,8 +235,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="376" y="516" width="1264" height="1463" extended-state="0" />
-    <editor active="true" />
+    <frame x="965" y="505" width="1264" height="1463" extended-state="0" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26813367" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -202,7 +243,7 @@
       <window_info id="DB Browser" order="3" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3295796" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3295796" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -221,6 +262,7 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/test.py" />
     <entry file="file://$PROJECT_DIR$/employees">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="64">
@@ -228,24 +270,25 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test.py">
+    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="239">
-          <caret line="36" column="22" lean-forward="true" selection-end-line="72" />
+        <state relative-caret-position="240">
+          <caret line="15" column="25" lean-forward="true" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
           <folding>
-            <element signature="e#0#20#0" expanded="true" />
+            <marker date="1541090352541" expanded="true" signature="82:87" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/home.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="71" column="44" selection-start-line="71" selection-start-column="44" selection-end-line="71" selection-end-column="44" />
+        <state relative-caret-position="1078">
+          <caret line="104" column="47" selection-start-line="104" selection-start-column="47" selection-end-line="104" selection-end-column="47" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
-            <marker date="1541022751994" expanded="true" signature="1238:1247" ph="..." />
-            <marker date="1541022751994" expanded="true" signature="2573:2621" ph="..." />
+            <marker date="1541090501122" expanded="true" signature="1232:1241" ph="..." />
+            <marker date="1541090501122" expanded="true" signature="2133:2178" ph="..." />
+            <marker date="1541090501122" expanded="true" signature="3042:3051" ph="..." />
           </folding>
         </state>
       </provider>

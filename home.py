@@ -8,7 +8,7 @@ class App(tk.Tk):
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
 
-        self.title_font = tkfont.Font(family='Helvetica', size=18, weight="bold")
+        self.title_font = tkfont.Font(family='Helvetica', size=14, weight="bold")
 
         # the container is where we'll stack a bunch of frames
         # on top of each other, then the one we want visible
@@ -19,7 +19,7 @@ class App(tk.Tk):
         container.grid_columnconfigure(0, weight=1)
 
         self.employee_list = pd.read_csv('employees')
-        self.current_user = ''
+        self.user = None
 
         self.frames = {}
         for frame_name in (StartPage, LogInPage, OrderPage):
@@ -39,93 +39,71 @@ class App(tk.Tk):
         frame = self.frames[page_name]
         frame.tkraise()
 
-    # def select_user(self, user):
-    #     global user_id
-    #     user_id = user
-    #     self.show_frame('LogInPage')
-    #
-    # def get_password(self, pin):
-    #     global current_password
-    #     current_password += pin
-    #     if len(current_password) == 4:
-    #         if self.employee_list['password'][user_id] == int(current_password):
-    #             self.show_frame("StopWatch")
-    #             current_password = ''
-    #         else:
-    #             messagebox.showinfo("Error", "Invalid PIN")
-    #             current_password = ''
-
 
 class StartPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
-        label = tk.Label(self, text="Log in Page", font=controller.title_font)
+        label = tk.Label(self, text="Welcome", font=controller.title_font)
         label.grid(row=0, column=0)
 
         employee_window = tk.Frame(self)
         employee_window.grid(row=1, column=0)
 
-        row_count, column_count = 0, 0
-        for employee in controller.employee_list['name']:
-            tk.Button(employee_window, text=employee, command=lambda: self.select_user(employee))\
-                .grid(row=row_count, column=column_count)
+        num = 0
+        for row in range(8):
+            for column in range(8):
+                try:
+                    tk.Button(employee_window, text=controller.employee_list['name'][num],
+                              command=lambda n=num: self.select_user(n)).grid(row=row, column=column)
+                    num += 1
+                except KeyError:
+                    break
 
-    def select_user(self, controller, user):
-        controller.current_user = user
-        controller.show_frame('LogInPage')
-
-        # button1 = tk.Button(employee_window, text=employee_list['name'][0],
-        #                     command=lambda: controller.select_user(0))
-        # button1.grid(row=0, column=0)
-        # button2 = tk.Button(employee_window, text=employee_list['name'][1],
-        #                     command=lambda: controller.select_user(1))
-        # button2.grid(row=0, column=1)
-        # tk.Button(employee_window, text='Employee 2').grid(row=0, column=1)
-        # tk.Button(employee_window, text='Employee 3').grid(row=1, column=0)
-        # tk.Button(employee_window, text='Employee 4').grid(row=1, column=1)
-        #
-        # button1 = tk.Button(self, text="Log in",
-        #                     command=lambda: controller.show_frame("LogInPage"))
-        # button1.grid(row=2, column=0)
+    def select_user(self, user):
+        print(user)
+        self.controller.user = user
+        self.controller.show_frame('LogInPage')
 
 
 class LogInPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+        self.current_password = ''
         label = tk.Label(self, text='Enter PIN', font=controller.title_font)
         label.grid(row=0, column=0)
         button_window = tk.Canvas(self)
         button_window.grid(row=1, column=0)
-        button1 = tk.Button(button_window, text='1', command=lambda: controller.get_password('1'))
-        button1.grid(row=1, column=0, sticky='nsew')
-        button2 = tk.Button(button_window, text='2', command=lambda: controller.get_password('2'))
-        button2.grid(row=1, column=1, sticky='nsew')
-        button3 = tk.Button(button_window, text='3', command=lambda: controller.get_password('3'))
-        button3.grid(row=1, column=2, sticky='nsew')
-        button4 = tk.Button(button_window, text='4', command=lambda: controller.get_password('4'))
-        button4.grid(row=2, column=1, sticky='nsew')
-        button5 = tk.Button(button_window, text='1', command=lambda: controller.get_password('5'))
-        button5.grid(row=2, column=1, sticky='nsew')
-        button6 = tk.Button(button_window, text='2', command=lambda: controller.get_password('6'))
-        button6.grid(row=2, column=2, sticky='nsew')
-        button7 = tk.Button(button_window, text='3', command=lambda: controller.get_password('7'))
-        button7.grid(row=3, column=0, sticky='nsew')
-        button8 = tk.Button(button_window, text='4', command=lambda: controller.get_password('8'))
-        button8.grid(row=3, column=1, sticky='nsew')
-        button9 = tk.Button(button_window, text='4', command=lambda: controller.get_password('9'))
-        button9.grid(row=3, column=2, sticky='nsew')
 
-        button = tk.Button(self, text="Return to Selection",
-                           command=lambda: controller.show_frame("StartPage"))
-        button.grid(row=3, column=0)
+        num = 1
+        for row in range(3):
+            for column in range(3):
+                tk.Button(button_window, text=num, command=lambda n=num: self.get_password(n))\
+                    .grid(row=row, column=column, sticky='nsew')
+                num += 1
+
+        tk.Button(self, text="Return to Selection", command=lambda: controller.show_frame("StartPage"))\
+            .grid(row=3, column=0)
+
+    def get_password(self, pin):
+        self.current_password += str(pin)
+        if len(self.current_password) == 4:
+            if str(self.controller.employee_list.at[self.controller.user, 'password']) == self.current_password:
+                #  slightly faster to convert int to str for compare than vice versa
+                self.controller.show_frame('OrderPage')
+                self.current_password = ''  # is this necessary?
+            else:
+                messagebox.showinfo("Error", "Invalid PIN")
+                self.current_password = ''
 
 
 class OrderPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+        label = tk.Label(self, text="Order Page", font=controller.title_font)
+        label.grid(row=0, column=0)
 
 
 if __name__ == "__main__":
