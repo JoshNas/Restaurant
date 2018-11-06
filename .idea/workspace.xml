@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ad988984-cee6-4d2b-ab76-bb8bc24275ce" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/joshn.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/joshn.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/home.py" beforeDir="false" afterPath="$PROJECT_DIR$/home.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -15,35 +15,38 @@
     <session id="555237711">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="3" />
+          <entry key="project.closed" value="4" />
           <entry key="project.open.time.0" value="2" />
           <entry key="project.open.time.2" value="1" />
-          <entry key="project.opened" value="3" />
+          <entry key="project.open.time.6" value="1" />
+          <entry key="project.opened" value="4" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
+          <entry key="csv" value="3" />
           <entry key="employees" value="1" />
           <entry key="py" value="4" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="CSV" value="1" />
+          <entry key="CSV" value="4" />
           <entry key="Python" value="2" />
           <entry key="Scratch" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
+          <entry key="csv" value="17" />
           <entry key="employees" value="23" />
-          <entry key="py" value="1537" />
+          <entry key="py" value="3148" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="CSV" value="23" />
-          <entry key="Python" value="1241" />
+          <entry key="CSV" value="40" />
+          <entry key="Python" value="2852" />
           <entry key="Scratch" value="296" />
         </counts>
       </usages-collector>
@@ -55,14 +58,41 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/home.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1078">
-              <caret line="104" column="47" selection-start-line="104" selection-start-column="47" selection-end-line="104" selection-end-column="47" />
+            <state relative-caret-position="1094">
+              <caret line="177" column="24" selection-start-line="177" selection-start-column="24" selection-end-line="177" selection-end-column="24" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
-                <marker date="1541090501122" expanded="true" signature="1232:1241" ph="..." />
-                <marker date="1541090501122" expanded="true" signature="2133:2178" ph="..." />
-                <marker date="1541090501122" expanded="true" signature="3042:3051" ph="..." />
+                <marker date="1541475721739" expanded="true" signature="1232:1241" ph="..." />
+                <marker date="1541475721739" expanded="true" signature="2113:2158" ph="..." />
+                <marker date="1541475721739" expanded="true" signature="3022:3031" ph="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/appetizers.csv">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="10" selection-end-column="10" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/barmenu.csv">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="10" selection-start-column="10" selection-end-column="10" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/entrees.csv">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="10" selection-start-column="10" selection-end-column="10" />
             </state>
           </provider>
         </entry>
@@ -80,7 +110,7 @@
         <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="240">
-              <caret line="15" column="25" lean-forward="true" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
+              <caret line="15" column="25" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
               <folding>
                 <marker date="1541090352541" expanded="true" signature="82:87" ph="..." />
               </folding>
@@ -101,7 +131,11 @@
     <findStrings>
       <find>f</find>
       <find>current_user</find>
+      <find>keypad</find>
     </findStrings>
+    <replaceStrings>
+      <replace>appetizer_window</replace>
+    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -112,15 +146,18 @@
         <option value="$PROJECT_DIR$/employees" />
         <option value="$PROJECT_DIR$/test.py" />
         <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch.py" />
+        <option value="$PROJECT_DIR$/appetizers.csv" />
+        <option value="$PROJECT_DIR$/barmenu.csv" />
+        <option value="$PROJECT_DIR$/entrees.csv" />
         <option value="$PROJECT_DIR$/home.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="965" />
-    <option name="y" value="505" />
-    <option name="width" value="1264" />
-    <option name="height" value="1463" />
+    <option name="x" value="293" />
+    <option name="y" value="652" />
+    <option name="width" value="1197" />
+    <option name="height" value="1438" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -235,16 +272,17 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="965" y="505" width="1264" height="1463" extended-state="0" />
+    <frame x="293" y="652" width="1197" height="1438" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26813367" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19137931" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info id="DB Browser" order="3" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3295796" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3358837" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39938793" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -273,22 +311,43 @@
     <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
-          <caret line="15" column="25" lean-forward="true" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
+          <caret line="15" column="25" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
           <folding>
             <marker date="1541090352541" expanded="true" signature="82:87" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/barmenu.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="10" selection-start-column="10" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/entrees.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="10" selection-start-column="10" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/appetizers.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="10" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/home.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1078">
-          <caret line="104" column="47" selection-start-line="104" selection-start-column="47" selection-end-line="104" selection-end-column="47" />
+        <state relative-caret-position="1094">
+          <caret line="177" column="24" selection-start-line="177" selection-start-column="24" selection-end-line="177" selection-end-column="24" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
-            <marker date="1541090501122" expanded="true" signature="1232:1241" ph="..." />
-            <marker date="1541090501122" expanded="true" signature="2133:2178" ph="..." />
-            <marker date="1541090501122" expanded="true" signature="3042:3051" ph="..." />
+            <marker date="1541475721739" expanded="true" signature="1232:1241" ph="..." />
+            <marker date="1541475721739" expanded="true" signature="2113:2158" ph="..." />
+            <marker date="1541475721739" expanded="true" signature="3022:3031" ph="..." />
           </folding>
         </state>
       </provider>

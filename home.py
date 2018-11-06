@@ -61,7 +61,6 @@ class StartPage(tk.Frame):
                     break
 
     def select_user(self, user):
-        print(user)
         self.controller.user = user
         self.controller.show_frame('LogInPage')
 
@@ -102,10 +101,85 @@ class OrderPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
-        label = tk.Label(self, text="Order Page", font=controller.title_font)
-        label.grid(row=0, column=0)
+
+        self.table = None
+        appetizers = pd.read_csv('appetizers.csv')
+        entrees = pd.read_csv('entrees.csv')
+        drinks = pd.read_csv('barmenu.csv')
+
+        print(appetizers.iloc[1][0], appetizers.iloc[1][1])
+
+        self.order = []
+
+        table_select = tk.Canvas(self)
+        table_select.grid(row=0, column=0, sticky='nsew')
+
+        keypad = tk.Canvas(self)
+        keypad.grid(row=0, column=1)
+
+        appetizer_window = tk.Canvas(keypad)
+        appetizer_window.grid(row=0, column=0, sticky='new')
+
+        entree_window = tk.Canvas(keypad)
+        entree_window.grid(row=1, column=0, sticky='new', pady=15)
+
+        drink_window = tk.Canvas(keypad)
+        drink_window.grid(row=2, column=0, sticky='nsew', pady=15)
+
+        order_window = tk.Text(self)
+        order_window.grid(row=0, column=2)
+
+        # TODO: make number of tables adjustable by manager
+        num = 1
+        for row in range(9):
+            for column in range(2):
+                tk.Button(table_select, text=f'Table {num}', command=lambda n=num: self.set_table(n))\
+                    .grid(row=row, column=column, sticky='nsew')
+                num += 1
+
+        num = 0
+        for row in range(3):
+            for column in range(6):
+                try:
+                    tk.Button(appetizer_window, text=f'{appetizers.iloc[num][0]}',
+                              command=lambda n=num: self.add_to_order(appetizers.iloc[n][0], appetizers.iloc[n][1]),
+                              width=15).grid(row=row, column=column, sticky='nsew')
+                    num += 1
+                except IndexError:
+                    break
+
+        num = 0
+        for row in range(6):
+            for column in range(6):
+                try:
+                    tk.Button(entree_window, text=f'{entrees.iloc[num][0]}',
+                              command=lambda n=num: self.add_to_order(entrees.iloc[n][0], entrees.iloc[n][1]),
+                              width=15).grid(row=row, column=column, sticky='nsew')
+                    num += 1
+                except IndexError:
+                    break
+
+        num = 0
+        for row in range(4):
+            for column in range(6):
+                try:
+                    tk.Button(drink_window, text=f'{drinks.iloc[num][0]}',
+                              command=lambda n=num: self.add_to_order(drinks.iloc[n][0], drinks.iloc[n][1]),
+                              width=15).grid(row=row, column=column, sticky='nsew')
+                    num += 1
+                except IndexError:
+                    break
+
+    def set_table(self, table):
+        self.table = table
+
+    def add_to_order(self, item, price):
+        self.order.append([item, price])
+        print(self.order)
+
 
 
 if __name__ == "__main__":
     app = App()
+    app.geometry('1220x820')
     app.mainloop()
