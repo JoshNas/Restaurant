@@ -103,45 +103,67 @@ class OrderPage(tk.Frame):
         self.controller = controller
 
         self.table = None
+        self.guest = None
         appetizers = pd.read_csv('appetizers.csv')
         entrees = pd.read_csv('entrees.csv')
         drinks = pd.read_csv('barmenu.csv')
 
-        print(appetizers.iloc[1][0], appetizers.iloc[1][1])
-
         self.order = []
 
-        table_select = tk.Canvas(self)
-        table_select.grid(row=0, column=0, sticky='nsew')
+        self.selection_window = tk.Canvas(self)
+        self.selection_window.grid(row=0, column=0, sticky='nsew')
 
-        keypad = tk.Canvas(self)
-        keypad.grid(row=0, column=1)
+        self.table_select = tk.Canvas(self.selection_window)
+        self.table_select.grid(row=0, column=0, sticky='nsew')
 
-        appetizer_window = tk.Canvas(keypad)
-        appetizer_window.grid(row=0, column=0, sticky='new')
+        self.guest_select = tk.Canvas(self.selection_window)
+        self.guest_select.grid(row=0, column=1, sticky='nsew')
 
-        entree_window = tk.Canvas(keypad)
-        entree_window.grid(row=1, column=0, sticky='new', pady=15)
+        self.keypad = tk.Canvas(self)
+        self.keypad.grid(row=0, column=1)
 
-        drink_window = tk.Canvas(keypad)
-        drink_window.grid(row=2, column=0, sticky='nsew', pady=15)
+        self.appetizer_window = tk.Canvas(self.keypad)
+        self.appetizer_window.grid(row=0, column=0, sticky='new')
 
-        order_window = tk.Text(self)
-        order_window.grid(row=0, column=2)
+        self.entree_window = tk.Canvas(self.keypad)
+        self.entree_window.grid(row=1, column=0, sticky='new', pady=15)
+
+        self.drink_window = tk.Canvas(self.keypad)
+        self.drink_window.grid(row=2, column=0, sticky='nsew', pady=15)
+
+        self.display_window = tk.Canvas(self)
+        self.display_window.grid(row=0, column=3)
+
+        self.info_window = tk.Canvas(self)
+        self.info_window.grid(row=0, column=0)
+
+        self.order_window = tk.Text(self.display_window)
+        self.order_window.grid(row=1, column=0)
+
+        self.order_window = tk.Text(self.display_window)
+        self.order_window.grid(row=2, column=0)
+
+        self.price_window = tk.Text(self.display_window)
+        self.price_window.grid(row=3, column=1)
 
         # TODO: make number of tables adjustable by manager
         num = 1
-        for row in range(9):
-            for column in range(2):
-                tk.Button(table_select, text=f'Table {num}', command=lambda n=num: self.set_table(n))\
-                    .grid(row=row, column=column, sticky='nsew')
-                num += 1
+        for row in range(16):
+            tk.Button(self.table_select, text=f'Table {num}', command=lambda n=num: self.set_table(n))\
+                .grid(row=row, column=0, sticky='nsew')
+            num += 1
+
+        num = 1
+        for row in range(16):
+            tk.Button(self.guest_select, text=f'Guest {num}', command=lambda n=num: self.set_guest(n)) \
+                .grid(row=row, column=0, sticky='nsew')
+            num += 1
 
         num = 0
         for row in range(3):
             for column in range(6):
                 try:
-                    tk.Button(appetizer_window, text=f'{appetizers.iloc[num][0]}',
+                    tk.Button(self.appetizer_window, text=f'{appetizers.iloc[num][0]}',
                               command=lambda n=num: self.add_to_order(appetizers.iloc[n][0], appetizers.iloc[n][1]),
                               width=15).grid(row=row, column=column, sticky='nsew')
                     num += 1
@@ -152,7 +174,7 @@ class OrderPage(tk.Frame):
         for row in range(6):
             for column in range(6):
                 try:
-                    tk.Button(entree_window, text=f'{entrees.iloc[num][0]}',
+                    tk.Button(self.entree_window, text=f'{entrees.iloc[num][0]}',
                               command=lambda n=num: self.add_to_order(entrees.iloc[n][0], entrees.iloc[n][1]),
                               width=15).grid(row=row, column=column, sticky='nsew')
                     num += 1
@@ -163,7 +185,7 @@ class OrderPage(tk.Frame):
         for row in range(4):
             for column in range(6):
                 try:
-                    tk.Button(drink_window, text=f'{drinks.iloc[num][0]}',
+                    tk.Button(self.drink_window, text=f'{drinks.iloc[num][0]}',
                               command=lambda n=num: self.add_to_order(drinks.iloc[n][0], drinks.iloc[n][1]),
                               width=15).grid(row=row, column=column, sticky='nsew')
                     num += 1
@@ -173,9 +195,12 @@ class OrderPage(tk.Frame):
     def set_table(self, table):
         self.table = table
 
+    def set_guest(self, guest):
+        self.guest = guest
+
     def add_to_order(self, item, price):
         self.order.append([item, price])
-        print(self.order)
+        self.order_window.insert('end', f'{item} {price}\n')
 
 
 
