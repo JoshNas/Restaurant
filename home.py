@@ -5,12 +5,12 @@ import pandas as pd
 
 class App(tk.Tk):
 
-    def __init__(self, *args, **kwargs):
-        tk.Tk.__init__(self, *args, **kwargs)
+    def __init__(self):
+        tk.Tk.__init__(self)
 
         self.title_font = tkfont.Font(family='Helvetica', size=14, weight="bold")
 
-        # the container is where we'll stack a bunch of frames
+        # the container is where we'll stack frames
         # on top of each other, then the one we want visible
         # will be raised above the others
         container = tk.Frame(self)
@@ -45,11 +45,13 @@ class StartPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+        self.grid_rowconfigure(1, weight=1)
+        self.grid_columnconfigure(0, weight=1)
         label = tk.Label(self, text="Welcome", font=controller.title_font)
-        label.grid(row=0, column=0, sticky='nsew')
+        label.grid(row=0, column=0)
 
         employee_window = tk.Frame(self)
-        employee_window.grid(row=1, column=0, sticky='nsew')
+        employee_window.grid(row=1, column=0)
 
         num = 0
         for row in range(4):
@@ -70,6 +72,8 @@ class LogInPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+        self.grid_rowconfigure(1, weight=1)
+        self.grid_columnconfigure(0, weight=1)
         self.current_password = ''
         label = tk.Label(self, text='Enter PIN', font=controller.title_font)
         label.grid(row=0, column=0)
@@ -102,6 +106,10 @@ class TableSelection(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+        label = tk.Label(self, text="Select Table", font=controller.title_font)
+        label.grid(row=0, column=0)
+        self.grid_rowconfigure(1, weight=1)
+        self.grid_columnconfigure(0, weight=1)
         self.button_window = tk.Canvas(self)
 
         num = 1
@@ -113,7 +121,7 @@ class TableSelection(tk.Frame):
                 num += 1
 
         # need to change dynamically but winfo not working as expected
-        self.button_window.grid(row=0, column=0, pady=378, padx=320)
+        self.button_window.grid(row=1, column=0)
 
     def set_table(self, table):
         self.controller.current_table = table
@@ -212,5 +220,6 @@ class OrderPage(tk.Frame):
 
 if __name__ == "__main__":
     app = App()
-    app.geometry('860x860')
+
     app.mainloop()
+
