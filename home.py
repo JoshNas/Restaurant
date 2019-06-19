@@ -38,7 +38,7 @@ class App(tk.Tk):
             # will be the one that is visible.
             frame.grid(row=0, column=0, sticky="nsew")
 
-        self.show_frame("StartPage")
+        self.show_frame("OrderPage")
 
     def show_frame(self, page_name):
         """Show a frame for the given page name"""
@@ -171,6 +171,9 @@ class OrderPage(tk.Frame):
         self.drink_window = tk.Canvas(self.keypad)
         self.drink_window.grid(row=2, column=0, sticky='nsew', pady=15)
 
+        self.action_window = tk.Canvas(self.keypad)
+        self.action_window.grid(row=3, column=0, sticky='nsew', pady=15)
+
         self.display_window = tk.Canvas(self)
         self.display_window.grid(row=0, column=2, sticky='nsew')
 
@@ -223,6 +226,11 @@ class OrderPage(tk.Frame):
                 except IndexError:
                     break
 
+        tk.Button(self.action_window, text='Remove Last', command=self.remove_order, width=15, bd=5, bg='maroon3',
+                  font=font, activebackground='maroon4').grid(row=0, column=0)
+        tk.Button(self.action_window, text='Submit', command=self.submit, width=15, bd=5, bg='maroon3',
+                  font=font, activebackground='maroon4').grid(row=0, column=2)
+
     def set_table(self, table):
         self.table = table
 
@@ -232,9 +240,25 @@ class OrderPage(tk.Frame):
     def add_to_order(self, item, price, guest):
         if guest:
             self.order.append([item, price, guest])
-            self.order_window.insert('end', f'{item} {price}\n')
+            # is there a better way to get consistent spacing?
+            self.order_window.insert('end', f'{item} ${price} {"Guest:".rjust(40-(len(item)+len(str(price)))," ")}{guest}\n')
         else:
             popup('Please select a Guest')
+
+    def remove_order(self):
+        try:
+            self.order.pop()
+            self.order_window.delete(0.0, 'end')
+            for item, price, guest in self.order:
+                self. order_window.insert('end', f'{item} ${price} {"Guest:".rjust(40-(len(item)+len(str(price)))," ")}{guest}\n')
+        except IndexError:
+            # if we try to remove from empty list
+            popup('Order is empty')
+
+    def submit(self):
+        # will interact with database. code in separate file
+        pass
+
 
 
 if __name__ == "__main__":
