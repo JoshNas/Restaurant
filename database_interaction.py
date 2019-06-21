@@ -1,13 +1,17 @@
 import mysql.connector
+import credentials
 
 
 def connect_orders():
+    """Connect to restaurant database and table. If database or table does not exist they will be created.
+    Would like to make connecting to database a separate function to re-use, but returning the cursor causes python to
+    close the connection. There are some ways around this, but do not appear to worth implementing at this time."""
     # Attempt to connect to database. If it does not exists we with create in except clause.
     try:
         mydb = mysql.connector.connect(
             host="localhost",
-            user="Josh",
-            passwd="Atlanta2014Ithaca2018",
+            user=credentials.user,
+            passwd=credentials.password,
             database="restaurant"
         )
         mycursor = mydb.cursor()
@@ -16,8 +20,8 @@ def connect_orders():
         print('Didnt find that database. Lets create it!')
         mydb = mysql.connector.connect(
             host="localhost",
-            user="Josh",
-            passwd="Atlanta2014Ithaca2018"
+            user=credentials.user,
+            passwd=credentials.password
         )
 
         mycursor = mydb.cursor()
@@ -30,8 +34,8 @@ def connect_orders():
         # Connect to newly created database
         mydb = mysql.connector.connect(
             host="localhost",
-            user="Josh",
-            passwd="Atlanta2014Ithaca2018",
+            user=credentials.user,
+            passwd=credentials.password,
             database="restaurant"
         )
         mycursor = mydb.cursor()
@@ -40,7 +44,6 @@ def connect_orders():
     try:
         mycursor.execute("SELECT 1 FROM open_orders LIMIT 1;")
         # this cant be right, but needed to not get error. we must do SOMETHING with fetched data
-        # will actually be solved by selecting where anyway
         hi = mycursor.fetchall()
         print(hi)
         print('Works!')
@@ -54,7 +57,6 @@ def connect_orders():
                          "guest4total DECIMAL, guest5total DECIMAL, guest6total DECIMAL, guest7total DECIMAL, "
                          "guest8total DECIMAL, guest9total DECIMAL, guest10total DECIMAL, guest11total DECIMAL, "
                          "guest12total DECIMAL)")
-
 
     mycursor.close()
     mydb.close()
