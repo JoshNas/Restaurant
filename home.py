@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import messagebox, font as tkfont
 from tkinter.messagebox import showinfo
 import pandas as pd
+import datetime as dt
+import database_interaction as dbi
 
 
 def popup(message):
@@ -9,7 +11,8 @@ def popup(message):
 
 
 class App(tk.Tk):
-
+    """This will be our base. The container our frames will be stacked on. We will chose which frame to start on then
+    use the show_frame function, which will be called by the frames,  to move between them."""
     def __init__(self):
         tk.Tk.__init__(self)
 
@@ -30,6 +33,7 @@ class App(tk.Tk):
         self.frames = {}
         for frame_name in (StartPage, LogInPage, TableSelection, OrderPage):
             page_name = frame_name.__name__
+            # give container to frames as parent and self as controller to grant ability to use variables from here
             frame = frame_name(parent=container, controller=self)
             self.frames[page_name] = frame
 
@@ -38,7 +42,7 @@ class App(tk.Tk):
             # will be the one that is visible.
             frame.grid(row=0, column=0, sticky="nsew")
 
-        self.show_frame("OrderPage")
+        self.show_frame("StartPage")
 
     def show_frame(self, page_name):
         """Show a frame for the given page name"""
@@ -47,6 +51,8 @@ class App(tk.Tk):
 
 
 class StartPage(tk.Frame):
+    """Default will be to start with this frame. Our employee list will be used to populated buttons that will be
+    clicked to move that employee to the LogInPage where they will enter there PIN."""
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
@@ -79,6 +85,8 @@ class StartPage(tk.Frame):
 
 
 class LogInPage(tk.Frame):
+    """Employees will enter their PIN here to complete log in process. If incorrect PIN is entered a popup will alert
+    them to this. There will be a button at bottom of page allowing user's to return to previous page."""
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
@@ -92,17 +100,21 @@ class LogInPage(tk.Frame):
         font = ("Helvetica", 20)
 
         num = 1
+        # Create buttons to be used for entering PIN
         for row in range(3):
             for column in range(3):
                 tk.Button(button_window, text=num, command=lambda n=num: self.get_password(n),
                           width=10, height=5, bd=5, bg='SteelBlue1', font=font, activebackground='SteelBlue3')\
                     .grid(row=row, column=column, sticky='nsew')
                 num += 1
-
+        # Return to user selection page
         tk.Button(self, text="Return to Selection", command=lambda: controller.show_frame("StartPage"),
                   bd=5, font=font).grid(row=3, column=0)
 
     def get_password(self, pin):
+        """Stores numbers selected. When 4 total numbers have been entered compares that to the PIN for the
+        current selected employee. If the PIN is correct frame to select table will be shown. If it is incorrect
+        an error message will be displayed and user can try again."""
         self.current_password += str(pin)
         if len(self.current_password) == 4:
             if str(self.controller.employee_list.at[self.controller.user, 'password']) == self.current_password:
@@ -114,6 +126,8 @@ class LogInPage(tk.Frame):
 
 
 class TableSelection(tk.Frame):
+    """After successfully logging in the user will select the table they wish to add an order for. After doing this
+    they will be shown the frame where they can select guests and enter orders."""
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
@@ -127,6 +141,7 @@ class TableSelection(tk.Frame):
 
         num = 1
         per_row = 4
+        # Create table buttons
         for row in range(per_row):
             for column in range(4):
                 tk.Button(self.button_window, text=f'Table {num}', command=lambda n=num: self.set_table(n),
@@ -134,15 +149,18 @@ class TableSelection(tk.Frame):
                     .grid(row=row, column=column, sticky='nsew')
                 num += 1
 
-        # need to change dynamically but winfo not working as expected
         self.button_window.grid(row=1, column=0)
 
     def set_table(self, table):
+        """Sets table then switches to order entry frame"""
         self.controller.current_table = table
         self.controller.show_frame('OrderPage')
 
 
 class OrderPage(tk.Frame):
+    """Here user's will enter orders for currently selected table, by guest number. They will have the ability to remove
+    most recently entered order until none remain if desired. Once submitted the order is sent to MySQL database
+    and can user can no longer remove items here. They will be able to add more to same row based on Primary Key ID."""
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
@@ -154,6 +172,8 @@ class OrderPage(tk.Frame):
         drinks = pd.read_csv('barmenu.csv')
         font = ("Helvetica", 10)
 
+        # Store current order here
+        # CHANGE THIS TO DICTIONARY. WILL MAKE IT MUCH EASIER TO PASS INDIVIDUAL GUEST ORDERS TO DATABASE
         self.order = []
 
         self.guest_select = tk.Canvas(self)
@@ -183,6 +203,7 @@ class OrderPage(tk.Frame):
         self.price_window = tk.Text(self.display_window)
         self.price_window.grid(row=2, column=0)
 
+        # Create 16 guest buttons
         num = 1
         for row in range(16):
             tk.Button(self.guest_select, text=f'Guest {num}', command=lambda n=num: self.set_guest(n),
@@ -190,6 +211,7 @@ class OrderPage(tk.Frame):
                 .grid(row=row, column=0, sticky='nsew')
             num += 1
 
+        # Create appetizer buttons from csv using IndexError to know when reach end
         num = 0
         for row in range(4):
             for column in range(4):
@@ -202,6 +224,7 @@ class OrderPage(tk.Frame):
                 except IndexError:
                     break
 
+        # Create entree buttons from csv using IndexError to know when reach end
         num = 0
         for row in range(10):
             for column in range(4):
@@ -213,7 +236,7 @@ class OrderPage(tk.Frame):
                     num += 1
                 except IndexError:
                     break
-
+        # Create drink buttons from csv using IndexError to know when reach end
         num = 0
         for row in range(10):
             for column in range(4):
@@ -240,7 +263,7 @@ class OrderPage(tk.Frame):
     def add_to_order(self, item, price, guest):
         if guest:
             self.order.append([item, price, guest])
-            # is there a better way to get consistent spacing?
+            # is there a better way to get consistent spacing? negligible performance cost so doesn't really matter
             self.order_window.insert('end', f'{item} ${price} {"Guest:".rjust(40-(len(item)+len(str(price)))," ")}{guest}\n')
         else:
             popup('Please select a Guest')
@@ -256,9 +279,25 @@ class OrderPage(tk.Frame):
             popup('Order is empty')
 
     def submit(self):
-        # will interact with database. code in separate file
-        pass
+        """Submit order to open order database. Orders are stored in list to make remove order much easier. In this
+        function we will convert them to a dictionary with guests as keys and items with price tuples as values."""
 
+        orders = {}
+        for o in self.order:
+            try:
+                orders[f'Guest{o[2]}'] = orders[f'Guest{o[2]}'], (o[0], o[1])
+            except KeyError:
+                orders[f'Guest{o[2]}'] = (o[0], o[1])
+
+        server = self.controller.user
+        table = self.controller.current_table
+        order_id = f'{dt.datetime.now()}_{server}_{table}'
+
+        dbi.add_orders(order_id, server, table,)
+
+
+
+        
 
 
 if __name__ == "__main__":

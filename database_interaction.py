@@ -2,10 +2,10 @@ import mysql.connector
 import credentials
 
 
-def connect_orders(id, table_number, server, guest1='', guest2='', guest3='', guest4='', guest5='', guest6='',
-                   guest7='', guest8='', guest9='', guest10='', guest11='', guest12='', guest1total=0.0, guest2total=0.0,
-                   guest3total=0.0, guest4total=0.0, guest5total=0.0, guest6total=0.0, guest7total=0.0, guest8total=0.0,
-                   guest9total=0.0, guest10total=0.0, guest11total=0.0, guest12total=0.0):
+def add_orders(order_id, table_number, server, guest1='', guest2='', guest3='', guest4='', guest5='', guest6='',
+               guest7='', guest8='', guest9='', guest10='', guest11='', guest12='', guest1total=0.0, guest2total=0.0,
+               guest3total=0.0, guest4total=0.0, guest5total=0.0, guest6total=0.0, guest7total=0.0, guest8total=0.0,
+               guest9total=0.0, guest10total=0.0, guest11total=0.0, guest12total=0.0):
     """Connect to restaurant database and table. If database or table does not exist they will be created.
     Would like to make connecting to database a separate function to re-use, but returning the cursor causes python to
     close the connection. There are some ways around this, but do not appear to worth implementing at this time."""
@@ -69,7 +69,7 @@ def connect_orders(id, table_number, server, guest1='', guest2='', guest3='', gu
           "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s," \
           "%s, %s, %s)"
 
-    val = (id, table_number, server, guest1, guest2, guest3, guest4, guest5, guest6, guest7, guest8, guest9, guest10,
+    val = (order_id, table_number, server, guest1, guest2, guest3, guest4, guest5, guest6, guest7, guest8, guest9, guest10,
            guest11, guest12, guest1total, guest2total, guest3total, guest4total, guest5total, guest6total, guest7total,
            guest8total, guest9total, guest10total, guest11total, guest12total)
 
@@ -81,15 +81,6 @@ def connect_orders(id, table_number, server, guest1='', guest2='', guest3='', gu
     for h in hi:
         print(h)
 
-
-
     mycursor.close()
     mydb.close()
-
-
-connect_orders('Josh2', 2, 'Josh', guest1='FishShrimp', guest1total=16.0)
-connect_orders('Josh5', 5, 'Josh', guest1='Shrimp', guest1total=12.5)
-
-
-
 
