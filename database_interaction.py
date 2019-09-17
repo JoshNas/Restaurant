@@ -51,9 +51,9 @@ def add_orders(order_id, table_number, server, guest1='', guest2='', guest3='', 
         print(hi)
         print('Works!')
     except mysql.connector.errors.ProgrammingError:
-        print('Table did not exists, Creating test open orders now!')
+        print('Table did not exists, Creating restaurant now!')
         # id will be server name + table number
-        mycursor.execute("CREATE TABLE open_orders (id VARCHAR(20) PRIMARY KEY, table_number TINYINT, "
+        mycursor.execute("CREATE TABLE open_orders (id VARCHAR(100) PRIMARY KEY, table_number TINYINT, "
                          "server VARCHAR(30), guest1 VARCHAR(1000), guest2 VARCHAR(1000), guest3 VARCHAR(1000), "
                          "guest4 VARCHAR(1000), guest5 VARCHAR(1000), guest6 VARCHAR(1000), guest7 VARCHAR(1000), "
                          "guest8 VARCHAR(1000), guest9 VARCHAR(1000), guest10 VARCHAR(1000), guest11 VARCHAR(1000), "

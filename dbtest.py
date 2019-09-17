@@ -70,7 +70,14 @@ def connect_orders(table_id, table_number, server, guest1='', guest1total=0.0):
     mydb.close()
 
 
-connect_orders('Josh7', 7, 'Josh', guest1='FishAndShrimp', guest1total=16.5)
+# mydb = mysql.connector.connect(
+#     host="localhost",
+#     user=credentials.user,
+#     passwd=credentials.password,
+#     database="restaurant"
+# )
+# mycursor = mydb.cursor()
+# mycursor.execute("DROP DATABASE restaurant")
 
 
 

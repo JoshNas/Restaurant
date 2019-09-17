@@ -273,7 +273,7 @@ class OrderPage(tk.Frame):
             self.order.pop()
             self.order_window.delete(0.0, 'end')
             for item, price, guest in self.order:
-                self. order_window.insert('end', f'{item} ${price} {"Guest:".rjust(40-(len(item)+len(str(price)))," ")}{guest}\n')
+                self.order_window.insert('end', f'{item} ${price} {"Guest:".rjust(40-(len(item)+len(str(price)))," ")}{guest}\n')
         except IndexError:
             # if we try to remove from empty list
             popup('Order is empty')
@@ -293,7 +293,33 @@ class OrderPage(tk.Frame):
         table = self.controller.current_table
         order_id = f'{dt.datetime.now()}_{server}_{table}'
 
-        dbi.add_orders(order_id, server, table,)
+
+
+        guest1 = ''
+        guest1_total = 0
+        guest2 = ''
+        guest2_total = 0
+        guest3 = ''
+        guest3_total = 0
+
+        for k, v in orders.items():
+            print(k, v)
+            if k == 'Guest1':
+                for item in v:
+                    print(item)
+                    # guest1 += item[0]
+                    # guest1_total += float(item[1])
+            if k == 'Guest2':
+                for item in v:
+                    print(item)
+                    # guest1 += item[0]
+                    # guest1_total += float(item[1])
+
+
+
+
+
+        # dbi.add_orders(order_id, server, table, )
 
 
 
