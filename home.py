@@ -17,6 +17,7 @@ class App(tk.Tk):
         tk.Tk.__init__(self)
 
         self.title_font = tkfont.Font(family='Helvetica', size=14, weight="bold")
+        self.title('Restaurant')
 
         # the container is where we'll stack frames
         # on top of each other, then the one we want visible
@@ -169,7 +170,7 @@ class OrderPage(tk.Frame):
         self.guest = None
         appetizers = pd.read_csv('appetizers.csv')
         entrees = pd.read_csv('entrees.csv')
-        drinks = pd.read_csv('barmenu.csv')
+        drinks = pd.read_csv('drinkmenu.csv')
         font = ("Helvetica", 10)
 
         # Store current order here

@@ -1,28 +1,33 @@
 Item,Price
-Add Chicken,4
-Add Grilled Shrimp,4
-Add Boiled Shrimp,4
-Kid's Fish,6
-Kid's Chicken,6
-Kid's Shrimp,6
-Crawfish 5 lb,22
-Crawfish 3 lb,18
-Shrimp 1 lb,15
-Shrimp .5 lb,12
-Large Fish,14
-Small Fish,12
-Fried Shrimp,14
-Oysters 12,18
-Oysters 6,12
-Frog Legs,12
+Add Cheese,1
+Add Bacon,2
+Add Avocado,2
+Add Chicken, 4
+Kid's Grilled Cheese,6
+Kid's Burger,6
+Kid's Hot Dog,6
+Kid's Pizza,6
+Caesar Salad,9
+Cobb Salad,9
+Garden Salad,9
+Fun Salad,9
+Tuna Sandwich,12
+Haddock Sandwich,12
+Chicken Sandwich,12
+Roast Pork Sandwich,12
+Deluxe Burger,9
+Cheese Burger,10
+BBQ Burger,10
+Double Burger,12
 Chicken Tenders,10
-Platter,18
-Fish/Shrimp,14
-Fish/Oysters,14
-Shrimp/Oysters,14
+Fried Shrimp,13
+Pulled Pork,14
+Pulled Chicken,14
 No Fries,0
-No Hushpuppies,0
-Sub Boil Potatoes,0
-Sub Boil Coin,0
+No Slaw,0
+No Onions,0
+No Tomatoes,0
+Sub Onion Rings,1
+Sub Tots,0
 Sub Side Salad,0
 Add Side Salad,3
