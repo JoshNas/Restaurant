@@ -117,6 +117,7 @@ class LogInPage(tk.Frame):
         current selected employee. If the PIN is correct frame to select table will be shown. If it is incorrect
         an error message will be displayed and user can try again."""
         self.current_password += str(pin)
+        print(self.controller.user)
         if len(self.current_password) == 4:
             if str(self.controller.employee_list.at[self.controller.user, 'password']) == self.current_password:
                 #  slightly faster to convert int to str for compare than vice versa
@@ -155,6 +156,7 @@ class TableSelection(tk.Frame):
     def set_table(self, table):
         """Sets table then switches to order entry frame"""
         self.controller.current_table = table
+        # print(self.controller.current_table)
         self.controller.show_frame('OrderPage')
 
 
@@ -166,8 +168,6 @@ class OrderPage(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
 
-        self.server = self.controller.user
-        self.table = self.controller.current_table
         self.guest = None
         appetizers = pd.read_csv('appetizers.csv')
         entrees = pd.read_csv('entrees.csv')
@@ -268,17 +268,17 @@ class OrderPage(tk.Frame):
         self.guest = guest
 
     def add_to_order(self, item_type, item, price, guest):
-        print(self.server)
-        print(self.controller.user)
         if guest:
+            table = f'Table {self.controller.current_table}'
+            employee_id = self.controller.user
             self.order.append([item, price, guest])
             self.order_window.insert(
                 'end', f'{item} ${price} {"Guest:".rjust(40-(len(item)+len(str(price)))," ")}{guest}\n')
             if item_type == 'food':
-                self.food_order.append((item, float(price), f'Table {self.table}', self.guest, self.server))
+                self.food_order.append((item, float(price), table, self.guest, employee_id))
                 self.last_item_type = 'food'
             if item_type == 'drink':
-                self.drink_order.append((item, float(price), f'Table {self.table}', self.guest, self.server))
+                self.drink_order.append((item, float(price), table, self.guest, employee_id))
                 self.last_item_type = 'drink'
         else:
             popup('Please select a Guest')
@@ -316,8 +316,8 @@ class OrderPage(tk.Frame):
             except KeyError:
                 orders[f'Guest{o[2]}'] = (o[0], o[1])
 
-        # dbi.create_food_order(self.food_order)
-        # dbi.create_drink_order(self.drink_order)
+        dbi.create_food_order(self.food_order)
+        dbi.create_drink_order(self.drink_order)
 
         #  clear order variables and window
         self.clear_order()
