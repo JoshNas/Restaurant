@@ -1,33 +1,33 @@
 Item,Price
-Add Cheese,1
-Add Bacon,2
-Add Avocado,2
-Add Chicken, 4
-Kid's Grilled Cheese,6
-Kid's Burger,6
-Kid's Hot Dog,6
-Kid's Pizza,6
-Caesar Salad,9
-Cobb Salad,9
-Garden Salad,9
-Fun Salad,9
-Tuna Sandwich,12
-Haddock Sandwich,12
-Chicken Sandwich,12
-Roast Pork Sandwich,12
-Deluxe Burger,9
-Cheese Burger,10
-BBQ Burger,10
-Double Burger,12
-Chicken Tenders,10
-Fried Shrimp,13
-Pulled Pork,14
-Pulled Chicken,14
-No Fries,0
-No Slaw,0
-No Onions,0
-No Tomatoes,0
-Sub Onion Rings,1
-Sub Tots,0
-Sub Side Salad,0
-Add Side Salad,3
+Add Cheese,1.0
+Add Bacon,2.0
+Add Avocado,2.0
+Add Chicken, 4.0
+Kid's Grilled Cheese,6.0
+Kid's Burger,6.0
+Kid's Hot Dog,6.0
+Kid's Pizza,6.0
+Caesar Salad,9.0
+Cobb Salad,9.0
+Garden Salad,9.0
+Fun Salad,9.0
+Tuna Sandwich,12.5
+Haddock Sandwich,12.5
+Chicken Sandwich,12.0
+Roast Pork Sandwich,12.0
+Deluxe Burger,9.0
+Cheese Burger,10.0
+BBQ Burger,10.5
+Double Burger,12.5
+Chicken Tenders,10.0
+Fried Shrimp,13.0
+Pulled Pork,14.0
+Pulled Chicken,14.0
+No Fries,0.0
+No Slaw,0.0
+No Onions,0.0
+No Tomatoes,0.0
+Sub Onion Rings,1.0
+Sub Tots,0.0
+Sub Side Salad,0.0
+Add Side Salad,3.0

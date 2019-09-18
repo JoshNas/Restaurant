@@ -16,7 +16,7 @@ class App(tk.Tk):
     def __init__(self):
         tk.Tk.__init__(self)
 
-        self.title_font = tkfont.Font(family='Helvetica', size=14, weight="bold")
+        self.title_font = tkfont.Font(family='Helvetica', size=14, weight='bold')
         self.title('Restaurant')
 
         # the container is where we'll stack frames
@@ -41,9 +41,9 @@ class App(tk.Tk):
             # put all of the pages in the same location;
             # the one on the top of the stacking order
             # will be the one that is visible.
-            frame.grid(row=0, column=0, sticky="nsew")
+            frame.grid(row=0, column=0, sticky='nsew')
 
-        self.show_frame("StartPage")
+        self.show_frame('StartPage')
 
     def show_frame(self, page_name):
         """Show a frame for the given page name"""
@@ -166,16 +166,21 @@ class OrderPage(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
 
-        self.table = None
+        self.server = self.controller.user
+        self.table = self.controller.current_table
         self.guest = None
         appetizers = pd.read_csv('appetizers.csv')
         entrees = pd.read_csv('entrees.csv')
         drinks = pd.read_csv('drinkmenu.csv')
-        font = ("Helvetica", 10)
+        font = ('Helvetica', 10)
 
         # Store current order here
-        # CHANGE THIS TO DICTIONARY. WILL MAKE IT MUCH EASIER TO PASS INDIVIDUAL GUEST ORDERS TO DATABASE
         self.order = []
+        self.food_order = []
+        self.drink_order = []
+
+        # Used for remove last:
+        self.last_item_type = ''
 
         self.guest_select = tk.Canvas(self)
         self.guest_select.grid(row=0, column=0, sticky='nsew')
@@ -218,7 +223,8 @@ class OrderPage(tk.Frame):
             for column in range(4):
                 try:
                     tk.Button(self.appetizer_window, text=f'{appetizers.iloc[num][0]}',
-                              command=lambda n=num: self.add_to_order(appetizers.iloc[n][0], appetizers.iloc[n][1], self.guest),
+                              command=lambda n=num: self.add_to_order(
+                                  'food', appetizers.iloc[n][0], appetizers.iloc[n][1], self.guest),
                               width=15, bd=5, bg='tomato3', font=font, activebackground='tomato4')\
                         .grid(row=row, column=column, sticky='nsew')
                     num += 1
@@ -231,19 +237,22 @@ class OrderPage(tk.Frame):
             for column in range(4):
                 try:
                     tk.Button(self.entree_window, text=f'{entrees.iloc[num][0]}',
-                              command=lambda n=num: self.add_to_order(entrees.iloc[n][0], entrees.iloc[n][1], self.guest),
+                              command=lambda n=num: self.add_to_order(
+                                  'food', entrees.iloc[n][0], entrees.iloc[n][1], self.guest),
                               width=15, bd=5, bg='SteelBlue1', font=font, activebackground='SteelBlue3')\
                         .grid(row=row, column=column, sticky='nsew')
                     num += 1
                 except IndexError:
                     break
+
         # Create drink buttons from csv using IndexError to know when reach end
         num = 0
         for row in range(10):
             for column in range(4):
                 try:
                     tk.Button(self.drink_window, text=f'{drinks.iloc[num][0]}',
-                              command=lambda n=num: self.add_to_order(drinks.iloc[n][0], drinks.iloc[n][1], self.guest),
+                              command=lambda n=num: self.add_to_order(
+                                  'drink', drinks.iloc[n][0], drinks.iloc[n][1], self.guest),
                               width=15, bd=5, bg='yellow3', font=font, activebackground='yellow4')\
                         .grid(row=row, column=column, sticky='nsew')
                     num += 1
@@ -255,34 +264,51 @@ class OrderPage(tk.Frame):
         tk.Button(self.action_window, text='Submit', command=self.submit, width=15, bd=5, bg='maroon3',
                   font=font, activebackground='maroon4').grid(row=0, column=2)
 
-    def set_table(self, table):
-        self.table = table
-
     def set_guest(self, guest):
         self.guest = guest
 
-    def add_to_order(self, item, price, guest):
+    def add_to_order(self, item_type, item, price, guest):
+        print(self.server)
+        print(self.controller.user)
         if guest:
             self.order.append([item, price, guest])
-            # is there a better way to get consistent spacing? negligible performance cost so doesn't really matter
-            self.order_window.insert('end', f'{item} ${price} {"Guest:".rjust(40-(len(item)+len(str(price)))," ")}{guest}\n')
+            self.order_window.insert(
+                'end', f'{item} ${price} {"Guest:".rjust(40-(len(item)+len(str(price)))," ")}{guest}\n')
+            if item_type == 'food':
+                self.food_order.append((item, float(price), f'Table {self.table}', self.guest, self.server))
+                self.last_item_type = 'food'
+            if item_type == 'drink':
+                self.drink_order.append((item, float(price), f'Table {self.table}', self.guest, self.server))
+                self.last_item_type = 'drink'
         else:
             popup('Please select a Guest')
 
     def remove_order(self):
         try:
             self.order.pop()
+            if self.last_item_type == 'food':
+                self.food_order.pop()
+            if self.last_item_type == 'drink':
+                self.drink_order.pop()
             self.order_window.delete(0.0, 'end')
             for item, price, guest in self.order:
-                self.order_window.insert('end', f'{item} ${price} {"Guest:".rjust(40-(len(item)+len(str(price)))," ")}{guest}\n')
+                self.order_window.insert(
+                    'end', f'{item} ${price} {"Guest:".rjust(40-(len(item)+len(str(price)))," ")}{guest}\n')
         except IndexError:
             # if we try to remove from empty list
             popup('Order is empty')
+
+    def clear_order(self):
+        self.order = []
+        self.food_order = []
+        self.drink_order = []
+        self.order_window.delete('1.0', 'end')
 
     def submit(self):
         """Submit order to open order database. Orders are stored in list to make remove order much easier. In this
         function we will convert them to a dictionary with guests as keys and items with price tuples as values."""
 
+        #  store orders by guest
         orders = {}
         for o in self.order:
             try:
@@ -290,41 +316,11 @@ class OrderPage(tk.Frame):
             except KeyError:
                 orders[f'Guest{o[2]}'] = (o[0], o[1])
 
-        server = self.controller.user
-        table = self.controller.current_table
-        order_id = f'{dt.datetime.now()}_{server}_{table}'
+        # dbi.create_food_order(self.food_order)
+        # dbi.create_drink_order(self.drink_order)
 
-
-
-        guest1 = ''
-        guest1_total = 0
-        guest2 = ''
-        guest2_total = 0
-        guest3 = ''
-        guest3_total = 0
-
-        for k, v in orders.items():
-            print(k, v)
-            if k == 'Guest1':
-                for item in v:
-                    print(item)
-                    # guest1 += item[0]
-                    # guest1_total += float(item[1])
-            if k == 'Guest2':
-                for item in v:
-                    print(item)
-                    # guest1 += item[0]
-                    # guest1_total += float(item[1])
-
-
-
-
-
-        # dbi.add_orders(order_id, server, table, )
-
-
-
-        
+        #  clear order variables and window
+        self.clear_order()
 
 
 if __name__ == "__main__":
