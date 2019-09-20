@@ -34,7 +34,8 @@ create_employee_table = "CREATE TABLE employees ( " \
                 "PRIMARY KEY (employee_id) )"
 
 employees = [[9298, 'Josh', 1111], [8238, 'Amy', 2233], [1160, 'Jacob', 2566],
-             [8100, 'Anibal', 2025], [5500, 'Mitch', 1174], [2600, 'Ryan', 8031]]
+             [8100, 'Anibal', 2025], [5500, 'Mitch', 1174], [2600, 'Ryan', 8031],
+             [1175, 'Katie', 3730], [4338, 'Heather', 7744]]
 
 
 def create_employees(employee):
@@ -53,14 +54,15 @@ mydb = mysql.connector.connect(
 )
 
 mycursor = mydb.cursor()
-
+# mycursor.execute("DROP TABLE food_orders")
+# mycursor.execute("DROP TABLE drink_orders")
+# mycursor.execute("DROP TABLE orders")
+#mycursor.execute("DROP TABLE employees")
 # mycursor.execute(create_employee_table)
+# create_employees(employees)
 # mycursor.execute(create_orders)
 # mycursor.execute(create_food_table)
 # mycursor.execute(create_drink_table)
-
-create_employees(employees)
-
 
 mycursor.execute('SELECT * FROM employees')
 tables = mycursor.fetchall()

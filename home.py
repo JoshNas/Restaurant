@@ -29,6 +29,7 @@ class App(tk.Tk):
 
         self.employee_list = dbi.get_employees()
         self.user = None
+        self.pin = None
         self.current_table = None
 
         self.frames = {}
@@ -81,8 +82,8 @@ class StartPage(tk.Frame):
                     break
 
     def select_user(self, user):
-        self.controller.user = user
-        print(user)
+        self.controller.user = self.controller.employee_list[user][0]
+        self.controller.pin = self.controller.employee_list[user][2]
         self.controller.show_frame('LogInPage')
 
 
@@ -118,9 +119,9 @@ class LogInPage(tk.Frame):
         current selected employee. If the PIN is correct frame to select table will be shown. If it is incorrect
         an error message will be displayed and user can try again."""
         self.current_password += str(number)
-        password = str(self.controller.employee_list[self.controller.user][2])
+
         if len(self.current_password) == 4:
-            if password == self.current_password:
+            if int(self.current_password) == self.controller.pin:
                 #  slightly faster to convert int to str for compare than vice versa
                 self.controller.show_frame('TableSelection')
             else:
@@ -269,16 +270,14 @@ class OrderPage(tk.Frame):
 
     def add_to_order(self, item_type, item, price, guest):
         if guest:
-            table = f'Table {self.controller.current_table}'
-            employee_id = self.controller.user
             self.order.append([item, price, guest])
             self.order_window.insert(
                 'end', f'{item} ${price} {"Guest:".rjust(40-(len(item)+len(str(price)))," ")}{guest}\n')
             if item_type == 'food':
-                self.food_order.append((item, float(price), table, self.guest, employee_id))
+                self.food_order.append((item, float(price), self.guest))
                 self.last_item_type = 'food'
             if item_type == 'drink':
-                self.drink_order.append((item, float(price), table, self.guest, employee_id))
+                self.drink_order.append((item, float(price), self.guest))
                 self.last_item_type = 'drink'
         else:
             popup('Please select a Guest')
@@ -308,19 +307,21 @@ class OrderPage(tk.Frame):
         """Submit order to open order database. Orders are stored in list to make remove order much easier. In this
         function we will convert them to a dictionary with guests as keys and items with price tuples as values."""
 
-        #  store orders by guest
-        orders = {}
-        for o in self.order:
-            try:
-                orders[f'Guest{o[2]}'] = orders[f'Guest{o[2]}'], (o[0], o[1])
-            except KeyError:
-                orders[f'Guest{o[2]}'] = (o[0], o[1])
+        #  unique id for order_id
+        uid = str(self.controller.user) + str(dt.datetime.now().strftime('%M%S'))  # need to make better
 
-        dbi.create_food_order(self.food_order)
-        dbi.create_drink_order(self.drink_order)
+        # unpack order tuple and add uid to each entry
+        food = [[order[0], order[1], order[2], int(uid)] for order in self.food_order]
+        drinks = [[order[0], order[1], order[2], int(uid)] for order in self.drink_order]
+
+        dbi.create_order(uid, self.controller.user, self.controller.current_table)
+        dbi.create_food_order(food)
+        dbi.create_drink_order(drinks)
 
         #  clear order variables and window
         self.clear_order()
+
+        dbi.get_orders()
 
 
 if __name__ == "__main__":

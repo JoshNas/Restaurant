@@ -2,7 +2,7 @@ import mysql.connector
 import credentials as cred
 
 
-def create_order(order):
+def create_order(uid, employ_id, tbl):
     #  connect to database
     mydb = mysql.connector.connect(
         host="localhost",
@@ -17,7 +17,7 @@ def create_order(order):
     #  sql command to insert new row in current_orders table
     sql = "INSERT INTO orders (order_id, employee_id, table_number) VALUES (%s, %s, %s)"
     #  execute many to add each item in passed order list
-    mycursor.executemany(sql, order)
+    mycursor.execute(sql, (uid, employ_id, tbl))
     #  commit changes
     mydb.commit()
 
@@ -78,7 +78,17 @@ def get_orders():
     mycursor = mydb.cursor()
 
     #  select everything in current_orders table
+    mycursor.execute("SELECT * FROM orders")
+    orders = mycursor.fetchall()
+    for o in orders:
+        print(o)
+
     mycursor.execute("SELECT * FROM food_orders")
+    orders = mycursor.fetchall()
+    for o in orders:
+        print(o)
+
+    mycursor.execute("SELECT * FROM drink_orders")
     orders = mycursor.fetchall()
     for o in orders:
         print(o)
@@ -97,7 +107,11 @@ def get_employees():
 
     #  select everything in current_orders table
     mycursor.execute("SELECT * FROM employees")
-    orders = mycursor.fetchall()
-    return orders
+    employees = mycursor.fetchall()
+    return employees
+    # for e in employees:
+    #     print(e)
 
-get_employees()
+
+
+
