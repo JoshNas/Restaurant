@@ -12,18 +12,25 @@ mydb = mysql.connector.connect(
 mycursor = mydb.cursor()
 # mycursor.execute("DROP TABLE drink_orders")
 # mycursor.execute("DROP TABLE food_orders")
+
+
+sql = "CREATE TABLE orders (" \
+      "order_id "
+
+
+
 # mycursor.execute("CREATE TABLE food_orders (id INT AUTO_INCREMENT PRIMARY KEY, item VARCHAR(100), price FLOAT, tbl VARCHAR(25), guest VARCHAR(25), employee VARCHAR(25))")
 # mycursor.execute("CREATE TABLE drink_orders (id INT AUTO_INCREMENT PRIMARY KEY, item VARCHAR(100), price FLOAT, tbl VARCHAR(25), guest VARCHAR(25), employee VARCHAR(25))")
-mycursor.execute("SELECT * FROM food_orders")
-
-myresult = mycursor.fetchall()
-for r in myresult:
-    print(r)
-
-print('-'*25)
-
-mycursor.execute("SELECT * FROM drink_orders")
-
-myresult = mycursor.fetchall()
-for r in myresult:
-    print(r)
+# mycursor.execute("SELECT * FROM food_orders")
+#
+# myresult = mycursor.fetchall()
+# for r in myresult:
+#     print(r)
+#
+# print('-'*25)
+#
+# mycursor.execute("SELECT * FROM drink_orders")
+#
+# myresult = mycursor.fetchall()
+# for r in myresult:
+#     print(r)

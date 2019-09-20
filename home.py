@@ -27,7 +27,7 @@ class App(tk.Tk):
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
 
-        self.employee_list = pd.read_csv('employees')
+        self.employee_list = dbi.get_employees()
         self.user = None
         self.current_table = None
 
@@ -72,16 +72,17 @@ class StartPage(tk.Frame):
         for row in range(4):
             for column in range(4):
                 try:
-                    tk.Button(employee_window, text=controller.employee_list['name'][num],
+                    tk.Button(employee_window, text=controller.employee_list[num][1],
                               command=lambda n=num: self.select_user(n),
                               width=10, height=5, bd=5, bg='SteelBlue1', activebackground='SteelBlue3', font=font)\
                         .grid(row=row, column=column, sticky='nsew')
                     num += 1
-                except KeyError:
+                except IndexError:
                     break
 
     def select_user(self, user):
         self.controller.user = user
+        print(user)
         self.controller.show_frame('LogInPage')
 
 
@@ -112,14 +113,14 @@ class LogInPage(tk.Frame):
         tk.Button(self, text="Return to Selection", command=lambda: controller.show_frame("StartPage"),
                   bd=5, font=font).grid(row=3, column=0)
 
-    def get_password(self, pin):
+    def get_password(self, number):
         """Stores numbers selected. When 4 total numbers have been entered compares that to the PIN for the
         current selected employee. If the PIN is correct frame to select table will be shown. If it is incorrect
         an error message will be displayed and user can try again."""
-        self.current_password += str(pin)
-        print(self.controller.user)
+        self.current_password += str(number)
+        password = str(self.controller.employee_list[self.controller.user][2])
         if len(self.current_password) == 4:
-            if str(self.controller.employee_list.at[self.controller.user, 'password']) == self.current_password:
+            if password == self.current_password:
                 #  slightly faster to convert int to str for compare than vice versa
                 self.controller.show_frame('TableSelection')
             else:
@@ -156,7 +157,6 @@ class TableSelection(tk.Frame):
     def set_table(self, table):
         """Sets table then switches to order entry frame"""
         self.controller.current_table = table
-        # print(self.controller.current_table)
         self.controller.show_frame('OrderPage')
 
 
