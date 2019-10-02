@@ -3,7 +3,7 @@ from tkinter import messagebox, font as tkfont
 from tkinter.messagebox import showinfo
 import pandas as pd
 import datetime as dt
-import database_interaction as dbi
+from Database import database_interaction as dbi
 
 
 def popup(message):
@@ -170,9 +170,9 @@ class OrderPage(tk.Frame):
         self.controller = controller
 
         self.guest = None
-        appetizers = pd.read_csv('appetizers.csv')
-        entrees = pd.read_csv('entrees.csv')
-        drinks = pd.read_csv('drinkmenu.csv')
+        appetizers = pd.read_csv('Menus/appetizers.csv')
+        entrees = pd.read_csv('Menus/entrees.csv')
+        drinks = pd.read_csv('Menus/drinkmenu.csv')
         font = ('Helvetica', 10)
 
         # Store current order here

@@ -1,4 +1,4 @@
-import credentials as cred
+from Database import credentials as cred
 import mysql.connector
 
 

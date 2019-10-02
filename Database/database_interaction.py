@@ -1,5 +1,5 @@
 import mysql.connector
-import credentials as cred
+from Database import credentials as cred
 
 
 def create_order(uid, employ_id, tbl):
