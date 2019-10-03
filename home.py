@@ -28,9 +28,9 @@ class App(tk.Tk):
         container.grid_columnconfigure(0, weight=1)
 
         self.employee_list = dbi.get_employees()
-        self.user = None
+        self.user = 9298  # default set for testing
         self.pin = None
-        self.current_table = None
+        self.current_table = 1  # default set for testing
 
         self.frames = {}
         for frame_name in (StartPage, LogInPage, TableSelection, OrderPage):
@@ -44,6 +44,7 @@ class App(tk.Tk):
             # will be the one that is visible.
             frame.grid(row=0, column=0, sticky='nsew')
 
+        # Frame to start on
         self.show_frame('StartPage')
 
     def show_frame(self, page_name):
@@ -179,6 +180,7 @@ class OrderPage(tk.Frame):
         self.order = []
         self.food_order = []
         self.drink_order = []
+        self.total = 0
 
         # Used for remove last:
         self.last_item_type = ''
@@ -208,7 +210,7 @@ class OrderPage(tk.Frame):
         self.order_window.grid(row=1, column=0)
 
         self.price_window = tk.Text(self.display_window)
-        self.price_window.grid(row=2, column=0)
+        self.price_window.grid(row=3, column=0)
 
         # Create 16 guest buttons
         num = 1
@@ -273,23 +275,39 @@ class OrderPage(tk.Frame):
             self.order.append([item, price, guest])
             self.order_window.insert(
                 'end', f'{item} ${price} {"Guest:".rjust(40-(len(item)+len(str(price)))," ")}{guest}\n')
+            self.total += price
             if item_type == 'food':
                 self.food_order.append((item, float(price), self.guest))
                 self.last_item_type = 'food'
             if item_type == 'drink':
                 self.drink_order.append((item, float(price), self.guest))
                 self.last_item_type = 'drink'
+            self.display_total()
         else:
             popup('Please select a Guest')
+
+    def display_total(self):
+        pretax_total = self.total
+        tax = self.total * .08
+        total = pretax_total + tax
+
+        pre_tax_total = 'pre-tax: ${:0.2f}\n'.format(pretax_total)
+        tax = 'tax: ${:0.2f}\n'.format(tax)
+        total = 'total: ${:0.2f}\n'.format(total)
+        self.price_window.delete('1.0', 'end')
+        self.price_window.insert('end', pre_tax_total)
+        self.price_window.insert('end', tax)
+        self.price_window.insert('end', total)
 
     def remove_order(self):
         try:
             self.order.pop()
             if self.last_item_type == 'food':
-                self.food_order.pop()
+                self.total -= self.food_order.pop()[1]
             if self.last_item_type == 'drink':
-                self.drink_order.pop()
+                self.total -= self.drink_order.pop()[1]
             self.order_window.delete(0.0, 'end')
+            self.display_total()
             for item, price, guest in self.order:
                 self.order_window.insert(
                     'end', f'{item} ${price} {"Guest:".rjust(40-(len(item)+len(str(price)))," ")}{guest}\n')
@@ -302,6 +320,7 @@ class OrderPage(tk.Frame):
         self.food_order = []
         self.drink_order = []
         self.order_window.delete('1.0', 'end')
+        self.price_window.delete('1.0', 'end')
 
     def submit(self):
         """Submit order to open order database. Orders are stored in list to make remove order much easier. In this
