@@ -18,6 +18,7 @@ class App(tk.Tk):
 
         self.title_font = tkfont.Font(family='Helvetica', size=14, weight='bold')
         self.title('Restaurant')
+        self.iconbitmap('img/logo.ico')
 
         # the container is where we'll stack frames
         # on top of each other, then the one we want visible
